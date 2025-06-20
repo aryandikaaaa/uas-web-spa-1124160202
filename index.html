@@ -1,57 +1,68 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class=""> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pembayaran Pro - Fixed</title>
+    <title>Dashboard Pembayaran Akademik</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
+    <script>
+        // Konfigurasi Tailwind untuk mengaktifkan dark mode berbasis kelas
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
 </head>
-<body class="bg-slate-100 min-h-screen py-8 px-4">
-    <div id="toastContainer" class="fixed top-5 right-5 z-[100] space-y-3 w-80"></div>
-
-    <div class="container mx-auto max-w-6xl">
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">Sistem Pembayaran Pro</h1>
-            <p class="text-slate-500">Kelola transaksi dengan animasi, tabel, dan penyimpanan data.</p>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+    
+    <header class="bg-white dark:bg-slate-800 shadow-md sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="flex justify-between items-center py-3">
+                <div class="flex items-center space-x-3">
+                    <img src="assets/icon/logo_global.svg" alt="Logo Kampus" class="h-10 w-10">
+                    <span class="text-xl font-bold text-slate-800 dark:text-white">Pembayaran Akademik</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:focus:ring-slate-700 rounded-lg text-sm p-2.5 transition-all duration-300">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <img src="assets/icon/profil.svg" alt="Foto Profil" class="h-10 w-10 rounded-full ring-2 ring-offset-2 ring-offset-slate-100 dark:ring-offset-slate-800 ring-teal-500">
+                </div>
+            </div>
         </div>
+    </header>
 
+    <div id="toastContainer" class="fixed top-20 right-5 z-[100] space-y-3 w-80"></div>
+
+    <main class="container mx-auto max-w-7xl py-8 px-4">
         <div class="grid lg:grid-cols-5 gap-8">
-            <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6 transform hover:scale-[1.01] transition-transform duration-300">
+            <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 transition-colors duration-300">
                 <form id="paymentForm" class="space-y-4">
-                    <h2 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4">Buat Transaksi Baru</h2>
+                    <h2 class="text-xl font-bold text-slate-800 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-3 mb-4">Buat Transaksi Baru</h2>
                     
                     <div>
-                        <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">Nama Pelanggan</label>
-                        <input 
-                            type="text" 
-                            id="customerName" 
-                            name="customerName" placeholder="Masukkan nama pelanggan" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-                            required>
+                        <label for="customerName" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Nama Pelanggan</label>
+                        <input type="text" id="customerName" name="customerName" placeholder="Masukkan nama pelanggan" class="w-full bg-slate-50 dark:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition" required>
                     </div>
                     <div>
-                        <label for="customerEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input 
-                            type="email" 
-                            id="customerEmail" 
-                            name="customerEmail" placeholder="contoh@email.com" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-                            required>
+                        <label for="customerEmail" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Email</label>
+                        <input type="email" id="customerEmail" name="customerEmail" placeholder="contoh@email.com" class="w-full bg-slate-50 dark:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition" required>
                     </div>
                     <div>
-                        <label for="productSelect" class="block text-sm font-medium text-gray-700 mb-1">Pilih Produk/Layanan</label>
-                        <select 
-                            id="productSelect" 
-                            name="product" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-                            required>
+                        <label for="productSelect" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Pilih Produk/Layanan</label>
+                        <select id="productSelect" name="product" class="w-full bg-slate-50 dark:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition" required>
                             <option value="">Pilih produk...</option>
                             <option value="basic" data-price="50000">Paket Basic - Rp 50.000</option>
                             <option value="premium" data-price="100000">Paket Premium - Rp 100.000</option>
@@ -60,54 +71,48 @@
                         </select>
                     </div>
                     <div>
-                        <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Jumlah</label>
-                        <input 
-                            type="number" 
-                            id="quantity" 
-                            name="quantity" min="1" 
-                            value="1" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-                            required>
+                        <label for="quantity" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Jumlah</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="w-full bg-slate-50 dark:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition" required>
                     </div>
-                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Metode Pembayaran</label>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Metode Pembayaran</label>
                         <div class="grid grid-cols-2 gap-2">
-                             <label class="flex items-center p-2 border rounded-lg hover:bg-slate-50 transition"><input type="radio" name="paymentMethod" value="transfer" class="text-blue-600 focus:ring-blue-500"><span class="ml-2 text-sm">Transfer Bank</span></label>
-                             <label class="flex items-center p-2 border rounded-lg hover:bg-slate-50 transition"><input type="radio" name="paymentMethod" value="ewallet" class="text-blue-600 focus:ring-blue-500"><span class="ml-2 text-sm">E-Wallet</span></label>
-                             <label class="flex items-center p-2 border rounded-lg hover:bg-slate-50 transition"><input type="radio" name="paymentMethod" value="credit" class="text-blue-600 focus:ring-blue-500"><span class="ml-2 text-sm">Kartu Kredit</span></label>
-                             <label class="flex items-center p-2 border rounded-lg hover:bg-slate-50 transition"><input type="radio" name="paymentMethod" value="cash" class="text-blue-600 focus:ring-blue-500"><span class="ml-2 text-sm">Bayar Tunai</span></label>
+                            <label class="flex items-center p-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition"><input type="radio" name="paymentMethod" value="transfer" class="text-teal-600 focus:ring-teal-500"><span class="ml-2 text-sm">Transfer Bank</span></label>
+                            <label class="flex items-center p-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition"><input type="radio" name="paymentMethod" value="ewallet" class="text-teal-600 focus:ring-teal-500"><span class="ml-2 text-sm">E-Wallet</span></label>
+                            <label class="flex items-center p-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition"><input type="radio" name="paymentMethod" value="credit" class="text-teal-600 focus:ring-teal-500"><span class="ml-2 text-sm">Kartu Kredit</span></label>
+                            <label class="flex items-center p-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition"><input type="radio" name="paymentMethod" value="cash" class="text-teal-600 focus:ring-teal-500"><span class="ml-2 text-sm">Bayar Tunai</span></label>
                         </div>
                     </div>
                     <div>
-                        <label for="promoCode" class="block text-sm font-medium text-gray-700 mb-1">Kode Promo</label>
+                        <label for="promoCode" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Kode Promo</label>
                         <div class="flex gap-2">
-                            <input type="text" id="promoCode" placeholder="Masukkan kode promo" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
-                            <button type="button" id="resetPromoBtn" class="px-3 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition" title="Reset Promo">&#x21BA;</button>
+                            <input type="text" id="promoCode" placeholder="Masukkan kode promo" class="flex-1 bg-slate-50 dark:bg-slate-700 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+                            <button type="button" id="resetPromoBtn" class="px-3 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500 transition" title="Reset Promo">&#x21BA;</button>
                             <button type="button" id="applyPromoBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">Terapkan</button>
                         </div>
                     </div>
-                    <div class="bg-slate-50 rounded-lg p-4 space-y-2">
-                        <div class="flex justify-between items-center text-sm text-slate-600"><span>Subtotal:</span><span id="subtotal">Rp 0</span></div>
-                        <div id="discountRow" class="flex justify-between items-center text-sm text-green-600 opacity-0 transition-opacity"><span>Diskon:</span><span id="discount">Rp 0</span></div>
-                        <div class="flex justify-between items-center text-lg font-bold text-slate-800 border-t pt-2 mt-2"><span>Total:</span><span id="totalAmount">Rp 0</span></div>
+                    <div class="bg-slate-100 dark:bg-slate-900/50 rounded-lg p-4 space-y-2">
+                        <div class="flex justify-between items-center text-sm text-slate-600 dark:text-slate-300"><span>Subtotal:</span><span id="subtotal">Rp 0</span></div>
+                        <div id="discountRow" class="flex justify-between items-center text-sm text-green-500 opacity-0 transition-opacity"><span>Diskon:</span><span id="discount">Rp 0</span></div>
+                        <div class="flex justify-between items-center text-lg font-bold text-slate-800 dark:text-white border-t border-slate-200 dark:border-slate-700 pt-2 mt-2"><span>Total:</span><span id="totalAmount">Rp 0</span></div>
                     </div>
-                    <button type="submit" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition transform hover:scale-105">Proses Pembayaran</button>
+                    <button type="submit" class="w-full py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800 transition transform hover:scale-105">Proses Pembayaran</button>
                 </form>
             </div>
 
-            <div class="lg:col-span-3 bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center justify-between mb-4 border-b pb-3">
-                    <h2 class="text-xl font-bold text-slate-800">Riwayat Transaksi</h2>
+            <div class="lg:col-span-3 bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 transition-colors duration-300">
+                <div class="flex items-center justify-between mb-4 border-b border-slate-200 dark:border-slate-700 pb-3">
+                    <h2 class="text-xl font-bold text-slate-800 dark:text-white">Riwayat Transaksi</h2>
                     <button id="clearHistoryBtn" class="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition opacity-0 hidden">Hapus Semua</button>
                 </div>
                 <div class="grid grid-cols-3 gap-4 mb-4">
-                    <div class="text-center p-3 bg-blue-50 rounded-lg"><div class="text-2xl font-bold text-blue-600" id="totalTransactions">0</div><div class="text-sm text-gray-600">Transaksi</div></div>
-                    <div class="text-center p-3 bg-green-50 rounded-lg"><div class="text-2xl font-bold text-green-600" id="totalRevenue">Rp 0</div><div class="text-sm text-gray-600">Pendapatan</div></div>
-                    <div class="text-center p-3 bg-purple-50 rounded-lg"><div class="text-2xl font-bold text-purple-600" id="avgTransaction">Rp 0</div><div class="text-sm text-gray-600">Rata-rata</div></div>
+                    <div class="text-center p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg"><div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="totalTransactions">0</div><div class="text-sm text-slate-600 dark:text-slate-300">Transaksi</div></div>
+                    <div class="text-center p-3 bg-green-100 dark:bg-green-900/50 rounded-lg"><div class="text-2xl font-bold text-green-600 dark:text-green-400" id="totalRevenue">Rp 0</div><div class="text-sm text-slate-600 dark:text-slate-300">Pendapatan</div></div>
+                    <div class="text-center p-3 bg-purple-100 dark:bg-purple-900/50 rounded-lg"><div class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="avgTransaction">Rp 0</div><div class="text-sm text-slate-600 dark:text-slate-300">Rata-rata</div></div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-700">
                             <tr>
                                 <th scope="col" class="px-4 py-3">Pelanggan</th>
                                 <th scope="col" class="px-4 py-3">Detail Produk</th>
@@ -122,43 +127,74 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 opacity-0 scale-95 pointer-events-none transition-all duration-300 ease-in-out">
-        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4 transform transition-all duration-300 ease-in-out">
+    <div id="paymentModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 opacity-0 scale-95 pointer-events-none transition-all duration-300 ease-in-out">
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full mx-4 transform transition-all duration-300 ease-in-out">
              <div class="text-center mb-4">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Pembayaran Berhasil!</h3>
-                <p class="text-gray-600">Transaksi Anda telah sukses diproses.</p>
+                <div class="w-16 h-16 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
+                <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-2">Pembayaran Berhasil!</h3>
+                <p class="text-slate-600 dark:text-slate-300">Transaksi Anda telah sukses diproses.</p>
             </div>
-            <div id="paymentDetails" class="bg-gray-50 rounded-lg p-4 mb-4 text-sm space-y-2"></div>
-            <button id="closeModalBtn" class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Tutup</button>
+            <div id="paymentDetails" class="bg-slate-100 dark:bg-slate-900/50 rounded-lg p-4 mb-4 text-sm space-y-2"></div>
+            <button id="closeModalBtn" class="w-full py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">Tutup</button>
         </div>
     </div>
 
     <template id="transactionTemplate">
-        <tr class="bg-white border-b hover:bg-gray-50 transition">
-            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap transaction-customer"></td>
+        <tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-200">
+            <td class="px-4 py-3 font-medium text-slate-900 dark:text-white whitespace-nowrap transaction-customer"></td>
             <td class="px-4 py-3 transaction-product"></td>
             <td class="px-4 py-3 transaction-method"></td>
-            <td class="px-4 py-3 font-semibold text-green-600 transaction-amount"></td>
-            <td class="px-4 py-3 text-gray-500 transaction-time"></td>
+            <td class="px-4 py-3 font-semibold text-green-600 dark:text-green-400 transaction-amount"></td>
+            <td class="px-4 py-3 text-slate-500 dark:text-slate-400 transaction-time"></td>
         </tr>
     </template>
     
     <script>
-        // Kode JavaScript tidak ada perubahan, karena masalahnya ada di HTML.
-        // ===== DATA & VARIABEL GLOBAL =====
+        // SCRIPT DIBAWAH INI MEMILIKI PENAMBAHAN LOGIKA UNTUK DARK MODE
+        // ===== BAGIAN LOGIKA TEMA (LIGHT/DARK MODE) =====
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Fungsi untuk menerapkan tema
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.add('hidden');
+                themeToggleLightIcon.classList.remove('hidden');
+            }
+        }
+
+        // Cek tema saat halaman dimuat
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        applyTheme(currentTheme);
+
+        // Event listener untuk tombol toggle
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const newTheme = isDark ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // ===== DATA & VARIABEL GLOBAL (Sama seperti sebelumnya) =====
         let transactions = [];
         let currentDiscount = 0;
         let appliedPromoCode = '';
-        
         const promoCodes = {
             "DISKON10": {type: "percentage", discount: 10, description: "Potongan 10%"},
             "HEMAT50K": {type: "fixed", discount: 50000, description: "Diskon tetap Rp 50.000"},
             "STUDENT20": {type: "percentage", discount: 20, description: "Diskon 20% pelajar"}
         };
-        const paymentMethodColors = {'transfer': 'bg-blue-100 text-blue-800','ewallet': 'bg-purple-100 text-purple-800','credit': 'bg-orange-100 text-orange-800','cash': 'bg-green-100 text-green-800'};
+        const paymentMethodColors = {'transfer': 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300','ewallet': 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300','credit': 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300','cash': 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'};
         const paymentMethodNames = {'transfer': 'Transfer Bank','ewallet': 'E-Wallet','credit': 'Kartu Kredit','cash': 'Bayar Tunai'};
 
         // ===== SELEKSI ELEMEN DOM =====
@@ -192,16 +228,12 @@
             const colors = {
                 success: 'bg-green-500',
                 error: 'bg-red-500',
-                info: 'bg-blue-500'
+                info: 'bg-teal-500'
             };
             toast.className = `p-4 rounded-lg text-white shadow-lg transform translate-x-full opacity-0 transition-all duration-300 ease-in-out ${colors[type]}`;
             toast.textContent = message;
             toastContainer.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-x-full', 'opacity-0');
-            }, 10);
-
+            setTimeout(() => { toast.classList.remove('translate-x-full', 'opacity-0'); }, 10);
             setTimeout(() => {
                 toast.classList.add('translate-x-full', 'opacity-0');
                 toast.addEventListener('transitionend', () => toast.remove());
@@ -209,13 +241,7 @@
         }
         
         function showPaymentModal(transaction) {
-            paymentDetails.innerHTML = `
-                <div class="flex justify-between"><span>ID Transaksi:</span><span class="font-medium">${transaction.id}</span></div>
-                <div class="flex justify-between"><span>Nama:</span><span class="font-medium">${transaction.customerName}</span></div>
-                <div class="flex justify-between"><span>Produk:</span><span class="font-medium">${transaction.productName}</span></div>
-                <div class="flex justify-between"><span>Metode:</span><span class="font-medium">${paymentMethodNames[transaction.paymentMethod]}</span></div>
-                ${transaction.discount > 0 ? `<div class="flex justify-between text-green-600"><span>Diskon:</span><span class="font-medium">-${formatCurrency(transaction.discount)}</span></div>` : ''}
-                <hr class="my-2"><div class="flex justify-between text-lg font-semibold"><span>Total:</span><span class="text-green-600">${formatCurrency(transaction.total)}</span></div>`;
+            paymentDetails.innerHTML = `<div class="flex justify-between"><span>ID Transaksi:</span><span class="font-medium">${transaction.id}</span></div> <div class="flex justify-between"><span>Nama:</span><span class="font-medium">${transaction.customerName}</span></div> <div class="flex justify-between"><span>Produk:</span><span class="font-medium">${transaction.productName}</span></div> <div class="flex justify-between"><span>Metode:</span><span class="font-medium">${paymentMethodNames[transaction.paymentMethod]}</span></div> ${transaction.discount > 0 ? `<div class="flex justify-between text-green-500 dark:text-green-400"><span>Diskon:</span><span class="font-medium">-${formatCurrency(transaction.discount)}</span></div>` : ''} <hr class="my-2 border-slate-200 dark:border-slate-700"><div class="flex justify-between text-lg font-semibold"><span>Total:</span><span class="text-green-600 dark:text-green-400">${formatCurrency(transaction.total)}</span></div>`;
             paymentModal.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
         }
 
@@ -226,18 +252,15 @@
             const selectedOption = productSelect.options[productSelect.selectedIndex];
             const price = parseInt(selectedOption.dataset.price) || 0;
             const subtotal = price * (parseInt(quantity.value) || 1);
-            
             const promoData = appliedPromoCode ? promoCodes[appliedPromoCode] : null;
             let discount = 0;
             if (promoData) {
                 discount = promoData.type === 'percentage' ? Math.round(subtotal * promoData.discount / 100) : Math.min(promoData.discount, subtotal);
             }
-            
             subtotalEl.textContent = formatCurrency(subtotal);
             discountEl.textContent = '-' + formatCurrency(discount);
             discountRow.classList.toggle('opacity-100', discount > 0);
             discountRow.classList.toggle('opacity-0', discount === 0);
-
             totalAmountEl.textContent = formatCurrency(subtotal - discount);
             currentDiscount = discount;
         }
@@ -246,7 +269,6 @@
             const code = promoCode.value.trim().toUpperCase();
             if (!code) return showToast('Masukkan kode promo', 'error');
             if (!promoCodes[code]) return showToast('Kode promo tidak valid', 'error');
-
             appliedPromoCode = code;
             updateTotal();
             showToast(`Promo "${promoCodes[code].description}" berhasil diterapkan!`, 'success');
@@ -272,9 +294,9 @@
         };
         
         function renderTransactions() {
-            transactionListBody.innerHTML = ''; // Clear table body
+            transactionListBody.innerHTML = ''; 
             if (transactions.length === 0) {
-                transactionListBody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500 py-8">Belum ada transaksi</td></tr>`;
+                transactionListBody.innerHTML = `<tr><td colspan="5" class="text-center text-slate-500 py-8">Belum ada transaksi</td></tr>`;
                 clearHistoryBtn.classList.add('opacity-0', 'hidden');
             } else {
                 clearHistoryBtn.classList.remove('opacity-0', 'hidden');
@@ -282,12 +304,11 @@
                     const row = transactionTemplate.content.cloneNode(true).querySelector('tr');
                     row.querySelector('.transaction-customer').textContent = transaction.customerName;
                     row.querySelector('.transaction-product').textContent = `${transaction.productName} (${transaction.quantity}x)`;
-                    row.querySelector('.transaction-method').innerHTML = `<span class="px-2 py-1 text-xs rounded-full ${paymentMethodColors[transaction.paymentMethod]}">${paymentMethodNames[transaction.paymentMethod]}</span>`;
+                    row.querySelector('.transaction-method').innerHTML = `<span class="px-2 py-1 text-xs font-medium rounded-full ${paymentMethodColors[transaction.paymentMethod]}">${paymentMethodNames[transaction.paymentMethod]}</span>`;
                     row.querySelector('.transaction-amount').textContent = formatCurrency(transaction.total);
                     row.querySelector('.transaction-time').textContent = transaction.time;
-                    
-                    row.classList.add('opacity-0', 'translate-y-2');
-                    transactionListBody.prepend(row); // Prepend to show newest on top
+                    row.classList.add('opacity-0', 'translate-y-2', 'transition-all', 'duration-300');
+                    transactionListBody.prepend(row);
                     setTimeout(() => row.classList.remove('opacity-0', 'translate-y-2'), 50);
                 });
             }
@@ -308,11 +329,9 @@
             e.preventDefault();
             const formData = new FormData(paymentForm);
             if (!formData.get('paymentMethod')) return showToast('Pilih metode pembayaran!', 'error');
-
-            const subtotal = (parseInt(productSelect.options[productSelect.selectedIndex].dataset.price) || 0) * (parseInt(formData.get('quantity')) || 1); // Fix: use formData here too for consistency
+            const subtotal = (parseInt(productSelect.options[productSelect.selectedIndex].dataset.price) || 0) * (parseInt(formData.get('quantity')) || 1);
             const total = subtotal - currentDiscount;
             if (total < 0) return showToast('Total tidak boleh negatif!', 'error');
-
             const newTransaction = {
                 id: 'TRX' + Date.now().toString().slice(-6),
                 customerName: formData.get('customerName'),
@@ -323,7 +342,6 @@
                 total: total,
                 time: getCurrentTime()
             };
-
             transactions.push(newTransaction);
             saveTransactions();
             renderTransactions();
